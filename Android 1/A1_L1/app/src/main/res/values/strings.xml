@@ -1,9 +1,0 @@
-<resources>
-    <!-- Ctrl + "/" -->
-
-    <!--Application strings-->
-    <string name="app_name">A1_L1</string>
-    <string name="hello_world">Hello World!</string>
-
-    <!--Error strings-->
-</resources>
