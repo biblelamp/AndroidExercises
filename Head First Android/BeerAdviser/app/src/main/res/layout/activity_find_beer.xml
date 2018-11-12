@@ -8,17 +8,29 @@
         android:paddingBottom="16dp"
         tools:context="com.hfad.beeradviser.FindBeerActivity">
 
-    <TextView
+    <Spinner
+            android:id="@+id/color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hello_world"
-            android:id="@+id/textView" />
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="37dp" />
+
     <Button
-            android:text="New button"
+            android:id="@+id/find_beer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView"
-            android:layout_alignLeft="@+id/textView"
-            android:id="@+id/button"/>
+            android:layout_alignLeft="@+id/color"
+            android:layout_below="@+id/color"
+            android:text="Button" />
+
+    <TextView
+            android:id="@+id/brands"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/find_beer"
+            android:layout_below="@+id/find_beer"
+            android:layout_marginTop="18dp"
+            android:text="textView" />
 
 </RelativeLayout>
