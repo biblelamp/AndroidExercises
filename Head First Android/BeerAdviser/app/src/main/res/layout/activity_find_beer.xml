@@ -23,7 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/color"
             android:layout_below="@+id/color"
-            android:text="@string/find_beer" />
+            android:text="@string/find_beer"
+            android:onClick="onClickFindBeer" />
 
     <TextView
             android:id="@+id/brands"
