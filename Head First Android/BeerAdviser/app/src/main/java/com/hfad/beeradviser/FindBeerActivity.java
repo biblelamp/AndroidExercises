@@ -1,9 +1,9 @@
 package com.hfad.beeradviser;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class FindBeerActivity extends AppCompatActivity {
+public class FindBeerActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
