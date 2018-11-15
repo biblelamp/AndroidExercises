@@ -1,12 +1,12 @@
 package com.hfad.beeradviser;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class FindBeerActivity extends Activity {
+public class FindBeerActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
