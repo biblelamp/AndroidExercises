@@ -15,18 +15,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView text = (TextView) findViewById(R.id.text);
-        text.setMovementMethod(new ScrollingMovementMethod());
-        text.setText(getStringFromAssetFile());
+        TextView textView = (TextView) findViewById(R.id.text);
+        textView.setMovementMethod(new ScrollingMovementMethod());
+        textView.setText(getStringFromAssetFile());
     }
 
     private String getStringFromAssetFile() {
         byte[] buffer = null;
-        InputStream is;
         try {
-            is = getAssets().open("2018/10/25.txt");
-            int size = is.available();
-            buffer = new byte[size];
+            InputStream is = getAssets().open("2018/10/25.txt");
+            buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
         } catch (IOException ex) {
