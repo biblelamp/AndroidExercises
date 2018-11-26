@@ -25,6 +25,10 @@ public class DateTool {
         return calendar.get(Calendar.YEAR);
     }
 
+    public void add(int day) {
+        calendar.add(Calendar.DAY_OF_MONTH, day);
+    }
+
     public String getFileName() {
         return Integer.toString(getYear()) + "/" +
                 Integer.toString(getMonth()) + "/" +
