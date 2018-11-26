@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.2.1 dated Nov 26, 2018
+ * @version 0.2.2 dated Nov 26, 2018
  */
 
 import android.support.v7.app.AppCompatActivity;
@@ -12,14 +12,17 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewConfiguration;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements OnTouchListener {
     private TextView textView;
     private DateTool date;
+    private float x, y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,24 +41,24 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        float x = 0;
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (event.getX() > textView.getWidth()/2) {
-                    date.add(1);
-                } else {
-                    date.add(-1);
-                }
-                setTitle(date.toString());
-                textView.setText(getStringFromAssetFile());
+                x = event.getX();
+                y = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
+                if (Math.abs(y - event.getY()) < 10) {
+                    date.add((int) Math.signum(x - event.getX()));
+                    setTitle(date.toString());
+                    textView.setText(getStringFromAssetFile());
+                    return true;
+                }
                 break;
         }
-        return true;
+        return false;
     }
 
     private String getStringFromAssetFile() {
