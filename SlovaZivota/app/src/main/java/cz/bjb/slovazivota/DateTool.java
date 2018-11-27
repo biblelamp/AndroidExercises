@@ -10,7 +10,7 @@ public class DateTool {
 
     public DateTool() {
         calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
+        setDate(new Date());
     }
 
     public int getDay() {
@@ -23,6 +23,10 @@ public class DateTool {
 
     public int getYear() {
         return calendar.get(Calendar.YEAR);
+    }
+
+    public void setDate(Date date) {
+        calendar.setTime(date);
     }
 
     public void add(int day) {
