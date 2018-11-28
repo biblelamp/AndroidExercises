@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3.3 dated Nov 28, 2018
+ * @version 0.3.4 dated Nov 28, 2018
  */
 
 import android.os.Build;
@@ -14,9 +14,11 @@ import android.os.Bundle;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector.OnDoubleTapListener;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -58,12 +60,6 @@ public class MainActivity extends AppCompatActivity implements
         updateView();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     private void updateView() {
         setTitle(date.toString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -73,6 +69,31 @@ public class MainActivity extends AppCompatActivity implements
             textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName())));
         }
         textView.scrollTo(0, 0);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.font_increase:
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+                        textView.getTextSize() + 2);
+                return true;
+            case R.id.font_reduce:
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
+                        textView.getTextSize() - 2);
+                return true;
+            case R.id.about:
+                //TODO insert about dialog
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
