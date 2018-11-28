@@ -23,6 +23,28 @@ public class TextTool {
         } catch (IOException ex) {
             return activity.getString(R.string.no_text);
         }
-        return new String(buffer);
+        return textToHTML(buffer);
+    }
+
+    private String textToHTML(byte[] buffer) {
+        String[] lines = new String(buffer).split("\n");
+        StringBuffer sb = new StringBuffer();
+        int counter = 0;
+        for (int i = 0; i < lines.length; i++) {
+            if (!lines[i].isEmpty()) {
+                counter++;
+                if (counter == 1) {
+                    lines[i] = wrapStringInTags(lines[i], "b");
+                } else if (counter == 2 || i == lines.length - 1) {
+                    lines[i] = wrapStringInTags(lines[i], "i");
+                }
+                sb.append(wrapStringInTags(lines[i], "p"));
+            }
+        }
+        return sb.toString();
+    }
+
+    private String wrapStringInTags(String str, String tag) {
+        return "<" + tag + ">" + str + "</" + tag + ">";
     }
 }

@@ -4,12 +4,14 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3.1 dated Nov 28, 2018
+ * @version 0.3.2 dated Nov 28, 2018
  */
 
+import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
@@ -19,8 +21,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements
@@ -54,8 +54,18 @@ public class MainActivity extends AppCompatActivity implements
             }
         });
 
+        updateText();
+    }
+
+    private void updateText() {
         setTitle(date.toString());
-        textView.setText(text.getStringFromAssetFile(date.getFileName()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            textView.setText(Html.fromHtml(text.getStringFromAssetFile(date.getFileName()),
+                    Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            textView.setText(Html.fromHtml(text.getStringFromAssetFile(date.getFileName())));
+        }
+        textView.scrollTo(0, 0);
     }
 
     @Override
@@ -78,9 +88,7 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(DEBUG_TAG,"onFling: " + velocityX + ":" + velocityY);
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             date.add((int) Math.signum(-velocityX));
-            setTitle(date.toString());
-            textView.setText(text.getStringFromAssetFile(date.getFileName()));
-            textView.scrollTo(0, 0);
+            updateText();
             return true;
         }
         return false;
@@ -112,9 +120,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onDoubleTap(MotionEvent event) {
         date.setDate(new Date());
-        setTitle(date.toString());
-        textView.setText(text.getStringFromAssetFile(date.getFileName()));
-        textView.scrollTo(0, 0);
+        updateText();
         return true;
     }
 
