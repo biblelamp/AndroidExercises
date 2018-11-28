@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Slova Života</string>
     <string name="no_text">Žádný text pro tento den.</string>
+    <string name="font_increase">Zvýšit písmo</string>
+    <string name="font_reduce">Zmenšit písmo</string>
+    <string name="app_about">O aplikaci</string>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/font_increase"
+          android:title="@string/font_increase" />
+    <item android:id="@+id/font_reduce"
+          android:title="@string/font_reduce" />
+    <item android:id="@+id/about"
+          android:title="@string/app_about" />
+</menu>

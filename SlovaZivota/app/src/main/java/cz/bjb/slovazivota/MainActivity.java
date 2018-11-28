@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3.2 dated Nov 28, 2018
+ * @version 0.3.3 dated Nov 28, 2018
  */
 
 import android.os.Build;
@@ -16,6 +16,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.GestureDetector.OnDoubleTapListener;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -31,15 +32,15 @@ public class MainActivity extends AppCompatActivity implements
     private TextTool text;
 
     private static final String DEBUG_TAG = "Gestures";
-    private GestureDetectorCompat mDetector;
+    private GestureDetectorCompat gdc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDetector = new GestureDetectorCompat(this,this);
-        mDetector.setOnDoubleTapListener(this);
+        gdc = new GestureDetectorCompat(this,this);
+        gdc.setOnDoubleTapListener(this);
 
         date = new DateTool();
         text = new TextTool(this);
@@ -49,28 +50,34 @@ public class MainActivity extends AppCompatActivity implements
         textView.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                mDetector.onTouchEvent(event);
+                gdc.onTouchEvent(event);
                 return false;
             }
         });
 
-        updateText();
+        updateView();
     }
 
-    private void updateText() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    private void updateView() {
         setTitle(date.toString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            textView.setText(Html.fromHtml(text.getStringFromAssetFile(date.getFileName()),
+            textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName()),
                     Html.FROM_HTML_MODE_COMPACT));
         } else {
-            textView.setText(Html.fromHtml(text.getStringFromAssetFile(date.getFileName())));
+            textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName())));
         }
         textView.scrollTo(0, 0);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        if (this.mDetector.onTouchEvent(event)) {
+        if (this.gdc.onTouchEvent(event)) {
             return true;
         }
         return super.onTouchEvent(event);
@@ -88,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(DEBUG_TAG,"onFling: " + velocityX + ":" + velocityY);
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             date.add((int) Math.signum(-velocityX));
-            updateText();
+            updateView();
             return true;
         }
         return false;
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onDoubleTap(MotionEvent event) {
         date.setDate(new Date());
-        updateText();
+        updateView();
         return true;
     }
 
