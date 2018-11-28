@@ -12,7 +12,7 @@ public class TextTool {
         this.activity = activity;
     }
 
-    public String getStringFromAssetFile(String fileName) {
+    public String getFileFromAsset(String fileName) {
         InputStream is = null;
         byte[] buffer = null;
         try {
