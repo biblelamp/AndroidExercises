@@ -40,6 +40,7 @@ public class DateTool {
     }
 
     public String toString() {
-        return Integer.toString(getDay()) + ". " + months[getMonth()];
+        return Integer.toString(getDay()) + ". " + months[getMonth()] +
+                " '" + Integer.toString(getYear() % 2000);
     }
 }

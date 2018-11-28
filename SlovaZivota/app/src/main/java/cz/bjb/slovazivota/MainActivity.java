@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3 dated Nov 27, 2018
+ * @version 0.3.1 dated Nov 28, 2018
  */
 
 import android.support.v4.view.GestureDetectorCompat;
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private TextView textView;
     private DateTool date;
+    private TextTool text;
 
     private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat mDetector;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements
         mDetector.setOnDoubleTapListener(this);
 
         date = new DateTool();
-        setTitle(date.toString());
+        text = new TextTool(this);
 
         textView = (TextView) findViewById(R.id.text);
         textView.setMovementMethod(new ScrollingMovementMethod());
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements
                 return false;
             }
         });
-        textView.setText(getStringFromAssetFile(date.getFileName()));
+
+        setTitle(date.toString());
+        textView.setText(text.getStringFromAssetFile(date.getFileName()));
     }
 
     @Override
@@ -72,11 +75,15 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2,
                            float velocityX, float velocityY) {
-        date.add((int) Math.signum(-velocityX));
-        setTitle(date.toString());
-        textView.setText(getStringFromAssetFile(date.getFileName()));
-        textView.scrollTo(0, 0);
-        return true;
+        Log.d(DEBUG_TAG,"onFling: " + velocityX + ":" + velocityY);
+        if (Math.abs(velocityX) > Math.abs(velocityY)) {
+            date.add((int) Math.signum(-velocityX));
+            setTitle(date.toString());
+            textView.setText(text.getStringFromAssetFile(date.getFileName()));
+            textView.scrollTo(0, 0);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -106,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onDoubleTap(MotionEvent event) {
         date.setDate(new Date());
         setTitle(date.toString());
-        textView.setText(getStringFromAssetFile(date.getFileName()));
+        textView.setText(text.getStringFromAssetFile(date.getFileName()));
         textView.scrollTo(0, 0);
         return true;
     }
@@ -121,19 +128,5 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onSingleTapConfirmed(MotionEvent event) {
         Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
         return true;
-    }
-
-    private String getStringFromAssetFile(String fileName) {
-        InputStream is = null;
-        byte[] buffer = null;
-        try {
-            is = getAssets().open(fileName);
-            buffer = new byte[is.available()];
-            is.read(buffer);
-            is.close();
-        } catch (IOException ex) {
-            return "Žádný text pro tento den.";
-        }
-        return new String(buffer);
     }
 }
