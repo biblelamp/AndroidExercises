@@ -25,3 +25,6 @@ http://developer.alexanderklimov.ru/android/theory/menu.php
 
 ### TextView
 http://developer.alexanderklimov.ru/android/views/textview.php
+
+### Save settings
+http://developer.alexanderklimov.ru/android/preference.php
