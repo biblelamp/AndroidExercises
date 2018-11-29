@@ -4,11 +4,13 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3.4 dated Nov 28, 2018
+ * @version 0.3.5 dated Nov 28, 2018
  */
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -89,7 +91,19 @@ public class MainActivity extends AppCompatActivity implements
                         textView.getTextSize() - 2);
                 return true;
             case R.id.about:
-                //TODO insert about dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.app_name)
+                        .setMessage(R.string.app_description)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setCancelable(false)
+                        .setNegativeButton("ОК",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
