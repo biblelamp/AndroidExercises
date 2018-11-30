@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - přemýšlejte o Božím Slovu
  *
  * @author Sergey Iryupin
- * @version 0.3.5 dated Nov 28, 2018
+ * @version 0.4 dated Nov 30, 2018
  */
 
 import android.content.DialogInterface;
@@ -13,6 +13,7 @@ import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements
 
         gdc = new GestureDetectorCompat(this,this);
         gdc.setOnDoubleTapListener(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         date = new DateTool();
         text = new TextTool(this);
