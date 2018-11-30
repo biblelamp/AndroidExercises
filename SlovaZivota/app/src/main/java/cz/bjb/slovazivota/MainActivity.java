@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.1 dated Nov 30, 2018
+ * @version 0.4.2 dated Nov 30, 2018
  */
 
 import android.content.DialogInterface;
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void updateView() {
-        setTitle(date.toString());
+        setTitle("  " + date.toString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName()),
                     Html.FROM_HTML_MODE_COMPACT));
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        //getSupportActionBar().setIcon(R.drawable.snowflake);
+        getSupportActionBar().setIcon(R.drawable.snowflake);
         return true;
     }
 
