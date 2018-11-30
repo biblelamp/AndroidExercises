@@ -1,10 +1,10 @@
 package cz.bjb.slovazivota;
 
 /**
- * Java. Slova Života - přemýšlejte o Božím Slovu
+ * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4 dated Nov 30, 2018
+ * @version 0.4.1 dated Nov 30, 2018
  */
 
 import android.content.DialogInterface;
@@ -97,10 +97,12 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(R.string.app_name)
-                        .setMessage(R.string.app_description)
                         .setIcon(R.mipmap.ic_launcher)
+                        .setMessage(getString(R.string.app_description) + "\n" +
+                                getString(R.string.app_texts_from) + "\n" +
+                                getString(R.string.app_developer))
                         .setCancelable(false)
-                        .setNegativeButton("ОК",
+                        .setNegativeButton(R.string.btn_ok,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.cancel();

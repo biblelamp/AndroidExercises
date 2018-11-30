@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Slova Života</string>
     <string name="app_description">Rozjímejte nad Božím Slovem každý den</string>
+    <string name="app_texts_from">Texty: Bratská jednota baptistov www.bjb.cz</string>
+    <string name="app_developer">Vývojář: Sergey Iryupin javageek@email.cz</string>
     <string name="no_text">Žádný text pro tento den.</string>
     <string name="font_increase">Zvýšit písmo</string>
     <string name="font_reduce">Zmenšit písmo</string>
     <string name="app_about">O aplikaci</string>
+    <string name="btn_ok">OK</string>
 </resources>
