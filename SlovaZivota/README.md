@@ -1,5 +1,8 @@
 # AndroidExercises | Slova Života
-Slova Života - přemýšlejte o Božím Slovu
+Slova Života - Rozjímejte nad Božím Slovem
+
+### Description
+Aplikace „Slovo Života“ pomůže vám denně rozjímat nad biblickými texty
 
 ### Lesson 102. Touch processing
 https://startandroid.ru/ru/uroki/vse-uroki-spiskom/167-urok-102-touch-obrabotka-kasanija.html
