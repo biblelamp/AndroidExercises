@@ -31,3 +31,6 @@ http://developer.alexanderklimov.ru/android/views/textview.php
 
 ### Save settings
 http://developer.alexanderklimov.ru/android/preference.php
+
+### Publication in Google Play
+http://developer.alexanderklimov.ru/android/publish.php
