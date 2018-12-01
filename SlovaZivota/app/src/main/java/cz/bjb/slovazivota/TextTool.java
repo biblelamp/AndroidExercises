@@ -31,7 +31,7 @@ public class TextTool {
         StringBuffer sb = new StringBuffer();
         int counter = 0;
         for (int i = 0; i < lines.length; i++) {
-            if (!lines[i].isEmpty()) {
+            if (!lines[i].trim().isEmpty()) {
                 counter++;
                 if (counter == 1) {
                     lines[i] = wrapStringInTags(lines[i], "b");
