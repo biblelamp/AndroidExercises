@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.3 dated Dec 01, 2018
+ * @version 0.4.4 dated Dec 02, 2018
  */
 
 import android.content.DialogInterface;
@@ -127,14 +127,14 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onDown(MotionEvent event) {
-        Log.d(DEBUG_TAG,"onDown: " + event.toString());
+        //Log.d(DEBUG_TAG,"onDown: " + event.toString());
         return true;
     }
 
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2,
                            float velocityX, float velocityY) {
-        Log.d(DEBUG_TAG,"onFling: " + velocityX + ":" + velocityY);
+        //Log.d(DEBUG_TAG,"onFling: " + velocityX + ":" + velocityY);
         if (Math.abs(velocityX) > Math.abs(velocityY)) {
             date.add((int) Math.signum(-velocityX));
             updateView();
@@ -145,24 +145,24 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLongPress(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onLongPress: " + event.toString());
+        //Log.d(DEBUG_TAG, "onLongPress: " + event.toString());
     }
 
     @Override
     public boolean onScroll(MotionEvent event1, MotionEvent event2, float distanceX,
                             float distanceY) {
-        Log.d(DEBUG_TAG, "onScroll: " + event1.toString() + event2.toString());
+        //Log.d(DEBUG_TAG, "onScroll: " + event1.toString() + event2.toString());
         return true;
     }
 
     @Override
     public void onShowPress(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onShowPress: " + event.toString());
+        //Log.d(DEBUG_TAG, "onShowPress: " + event.toString());
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onSingleTapUp: " + event.toString());
+        //Log.d(DEBUG_TAG, "onSingleTapUp: " + event.toString());
         return true;
     }
 
@@ -175,13 +175,13 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onDoubleTapEvent: " + event.toString());
+        //Log.d(DEBUG_TAG, "onDoubleTapEvent: " + event.toString());
         return true;
     }
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
+        //Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + event.toString());
         return true;
     }
 }
