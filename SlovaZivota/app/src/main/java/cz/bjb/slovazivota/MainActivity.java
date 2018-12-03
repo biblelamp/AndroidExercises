@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.4 dated Dec 02, 2018
+ * @version 0.4.5 dated Dec 03, 2018
  */
 
 import android.content.DialogInterface;
@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity implements
     private TextView textView;
     private DateTool date;
     private TextTool text;
+    private float textSize;
 
-    private static final String DEBUG_TAG = "Gestures";
+    //private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat gdc;
 
     @Override
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements
 
         date = new DateTool();
         text = new TextTool(this);
+        textSize = 16;
 
         textView = (TextView) findViewById(R.id.text);
         textView.setMovementMethod(new ScrollingMovementMethod());
@@ -88,12 +90,12 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.font_increase:
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-                        textView.getTextSize() + 2);
+                textSize += 2;
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
                 return true;
             case R.id.font_reduce:
-                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-                        textView.getTextSize() - 2);
+                textSize -= 2;
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
                 return true;
             case R.id.about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
