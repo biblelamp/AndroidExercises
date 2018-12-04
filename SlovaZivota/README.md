@@ -1,8 +1,8 @@
 # AndroidExercises | Slova Života
 Slova Života - Rozjímejte nad Božím Slovem
 
-### Description
-Aplikace „Slovo Života“ pomůže vám denně rozjímat nad biblickými texty
+### Description (short)
+Aplikace „Slova Života“ pomůže vám denně rozjímat nad biblickými texty
 
 ### Lesson 102. Touch processing
 https://startandroid.ru/ru/uroki/vse-uroki-spiskom/167-urok-102-touch-obrabotka-kasanija.html
@@ -34,3 +34,6 @@ http://developer.alexanderklimov.ru/android/preference.php
 
 ### Publication in Google Play
 http://developer.alexanderklimov.ru/android/publish.php
+
+### Welcome to the Google Play badge page
+https://play.google.com/intl/cz_cz/badges/
