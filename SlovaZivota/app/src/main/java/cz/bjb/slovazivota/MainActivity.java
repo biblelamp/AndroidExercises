@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.5 dated Dec 03, 2018
+ * @version 0.4.4 dated Dec 03, 2018
  */
 
 import android.content.DialogInterface;
