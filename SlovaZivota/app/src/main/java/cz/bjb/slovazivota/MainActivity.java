@@ -4,10 +4,12 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.4 dated Dec 03, 2018
+ * @version 0.4.5 dated Dec 09, 2018
  */
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
@@ -40,10 +42,17 @@ public class MainActivity extends AppCompatActivity implements
     //private static final String DEBUG_TAG = "Gestures";
     private GestureDetectorCompat gdc;
 
+    private static final String APP_SETTINGS = "settings";
+    private static final String APP_SETTINGS_TEXTSIZE = "textsize";
+    private static final float APP_TEXTSIZE_DEFAULT = 16;
+    private SharedPreferences settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        settings = getSharedPreferences(APP_SETTINGS, Context.MODE_PRIVATE);
 
         gdc = new GestureDetectorCompat(this,this);
         gdc.setOnDoubleTapListener(this);
@@ -53,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements
 
         date = new DateTool();
         text = new TextTool(this);
-        textSize = 16;
 
         textView = (TextView) findViewById(R.id.text);
         textView.setMovementMethod(new ScrollingMovementMethod());
@@ -77,6 +85,27 @@ public class MainActivity extends AppCompatActivity implements
             textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName())));
         }
         textView.scrollTo(0, 0);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat(APP_SETTINGS_TEXTSIZE, textSize);
+        editor.apply();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (settings.contains(APP_SETTINGS_TEXTSIZE)) {
+            textSize = settings.getFloat(APP_SETTINGS_TEXTSIZE, 0);
+        } else {
+            textSize = APP_TEXTSIZE_DEFAULT;
+        }
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
     }
 
     @Override
