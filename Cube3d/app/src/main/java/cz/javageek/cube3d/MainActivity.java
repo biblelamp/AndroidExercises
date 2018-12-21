@@ -18,7 +18,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.2 dated Dec 21, 2018
+ * @version 0.0.3 dated Dec 21, 2018
  */
 
 public class MainActivity extends AppCompatActivity implements OnTouchListener {
@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
     DrawView drawView;
     float mouseX, prevMouseX, mouseY, prevMouseY;
 
-    double[][] nodes = {{-1, -1, -1}, {-1, -1, 1}, {-1, 1, -1}, {-1, 1, 1},
-            {1, -1, -1}, {1, -1, 1}, {1, 1, -1}, {1, 1, 1}};
+    double[][] nodes = {{-1, -1, -1, 0}, {-1, -1, 1, 0}, {-1, 1, -1, 0}, {-1, 1, 1, 0},
+            {1, -1, -1, 0}, {1, -1, 1, 0}, {1, 1, -1, 0}, {1, 1, 1, 0}};
 
     int[][] edges = {{0, 1}, {1, 3}, {3, 2}, {2, 0}, {4, 5}, {5, 7}, {7, 6},
             {6, 4}, {0, 4}, {1, 5}, {2, 6}, {3, 7}};
@@ -48,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 mouseX = event.getX();
                 mouseY = event.getY();
+
+                if (drawView.setColor(mouseX, mouseY))
+                    drawView.invalidate();
+
                 break;
             case MotionEvent.ACTION_MOVE:
                 prevMouseX = mouseX;
@@ -116,11 +120,23 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             rotateCube(PI / 5, PI / 9);
         }
 
+        private boolean setColor(double x, double y) {
+            x -= getWidth() / 2;
+            y -= getHeight() / 2;
+
+            for (int i = 0; i < nodes.length; i++)
+                if (Math.abs(nodes[i][0] - x) < 10 && Math.abs(nodes[i][1] - y) < 10) {
+                    nodes[i][3] = 1 - nodes[i][3];
+                    return true;
+                }
+            return false;
+        }
+
         @Override
         protected void onDraw(Canvas canvas) {
-
             canvas.translate(getWidth() / 2, getHeight() / 2);
             canvas.drawColor(Color.BLACK);
+
             paint.setColor(Color.WHITE);
 
             for (int[] edge : edges) {
@@ -129,8 +145,10 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
                 canvas.drawLine(round(xy1[0]), round(xy1[1]), round(xy2[0]), round(xy2[1]), paint);
             }
 
-            for (double[] node : nodes)
-                canvas.drawCircle(round(node[0]), round(node[1]),4, paint);
+            for (double[] node : nodes) {
+                paint.setColor((node[3] == 0)? Color.WHITE : Color.RED);
+                canvas.drawCircle(round(node[0]), round(node[1]), 5, paint);
+            }
         }
     }
 }
