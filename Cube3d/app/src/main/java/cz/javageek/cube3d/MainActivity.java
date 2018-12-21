@@ -1,27 +1,29 @@
 package cz.javageek.cube3d;
 
 import android.content.Context;
-import android.gesture.GestureOverlayView;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.GestureDetector.OnDoubleTapListener;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.*;
-import android.widget.TextView;
 
 import static java.lang.Math.*;
 
+/**
+ * Java. Cube 3D
+ *
+ * @author Sergey Iryupin
+ * @version 0.0.2 dated Dec 21, 2018
+ */
+
 public class MainActivity extends AppCompatActivity implements OnTouchListener {
 
-    private static final String DEBUG_TAG = "OnTouch";
+    private static final String DEBUG_TAG = "Cube3D";
 
     DrawView drawView;
     float mouseX, prevMouseX, mouseY, prevMouseY;
@@ -99,12 +101,18 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
 
     class DrawView extends View {
 
-        Paint p;
+        Paint paint;
 
         public DrawView(Context context) {
             super(context);
-            p = new Paint(Paint.ANTI_ALIAS_FLAG);
-            scale(80);
+            paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+
+            Display display = getWindowManager().getDefaultDisplay();
+            int width = display.getWidth();
+            int height = display.getHeight();
+            scale(min(width, height) / 4);
+
+            //Log.d(DEBUG_TAG, width + ":" + height);
             rotateCube(PI / 5, PI / 9);
         }
 
@@ -113,16 +121,16 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
 
             canvas.translate(getWidth() / 2, getHeight() / 2);
             canvas.drawColor(Color.BLACK);
-            p.setColor(Color.WHITE);
+            paint.setColor(Color.WHITE);
 
             for (int[] edge : edges) {
                 double[] xy1 = nodes[edge[0]];
                 double[] xy2 = nodes[edge[1]];
-                canvas.drawLine(round(xy1[0]), round(xy1[1]), round(xy2[0]), round(xy2[1]), p);
+                canvas.drawLine(round(xy1[0]), round(xy1[1]), round(xy2[0]), round(xy2[1]), paint);
             }
 
             for (double[] node : nodes)
-                canvas.drawCircle(round(node[0]), round(node[1]),4, p);
+                canvas.drawCircle(round(node[0]), round(node[1]),4, paint);
         }
     }
 }
