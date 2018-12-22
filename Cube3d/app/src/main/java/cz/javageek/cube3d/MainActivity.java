@@ -18,20 +18,20 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.3 dated Dec 21, 2018
+ * @version 0.0.4 dated Dec 22, 2018
  */
 
 public class MainActivity extends AppCompatActivity implements OnTouchListener {
 
     private static final String DEBUG_TAG = "Cube3D";
 
-    DrawView drawView;
-    float mouseX, prevMouseX, mouseY, prevMouseY;
+    private DrawView drawView;
+    private float mouseX, prevMouseX, mouseY, prevMouseY;
 
-    double[][] nodes = {{-1, -1, -1, 0}, {-1, -1, 1, 0}, {-1, 1, -1, 0}, {-1, 1, 1, 0},
+    private double[][] nodes = {{-1, -1, -1, 0}, {-1, -1, 1, 0}, {-1, 1, -1, 0}, {-1, 1, 1, 0},
             {1, -1, -1, 0}, {1, -1, 1, 0}, {1, 1, -1, 0}, {1, 1, 1, 0}};
 
-    int[][] edges = {{0, 1}, {1, 3}, {3, 2}, {2, 0}, {4, 5}, {5, 7}, {7, 6},
+    private int[][] edges = {{0, 1}, {1, 3}, {3, 2}, {2, 0}, {4, 5}, {5, 7}, {7, 6},
             {6, 4}, {0, 4}, {1, 5}, {2, 6}, {3, 7}};
 
     @Override
@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
     class DrawView extends View {
 
         Paint paint;
+        int radius;
 
         public DrawView(Context context) {
             super(context);
@@ -114,7 +115,10 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             Display display = getWindowManager().getDefaultDisplay();
             int width = display.getWidth();
             int height = display.getHeight();
+
             scale(min(width, height) / 4);
+
+            radius = min(width, height) / 32;
 
             //Log.d(DEBUG_TAG, width + ":" + height);
             rotateCube(PI / 5, PI / 9);
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             y -= getHeight() / 2;
 
             for (int i = 0; i < nodes.length; i++)
-                if (Math.abs(nodes[i][0] - x) < 10 && Math.abs(nodes[i][1] - y) < 10) {
+                if (Math.abs(nodes[i][0] - x) < radius*2 && Math.abs(nodes[i][1] - y) < radius*2) {
                     nodes[i][3] = 1 - nodes[i][3];
                     return true;
                 }
@@ -147,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
 
             for (double[] node : nodes) {
                 paint.setColor((node[3] == 0)? Color.WHITE : Color.RED);
-                canvas.drawCircle(round(node[0]), round(node[1]), 5, paint);
+                canvas.drawCircle(round(node[0]), round(node[1]), radius, paint);
             }
         }
     }
