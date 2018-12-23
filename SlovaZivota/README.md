@@ -22,6 +22,9 @@ https://www.zdnet.com/article/how-to-use-multi-touch-in-android-2/
 ### HTML tags in TextView
 https://stackoverflow.com/questions/2116162/how-to-display-html-in-textview
 
+### Html.fromHtml() is deprecated, what is the alternative?
+https://stackoverflow.com/questions/37899856/html-fromhtml-is-deprecated-what-is-the-alternative
+
 ### Android menu
 http://developer.alexanderklimov.ru/android/menu.php
 http://developer.alexanderklimov.ru/android/theory/menu.php
