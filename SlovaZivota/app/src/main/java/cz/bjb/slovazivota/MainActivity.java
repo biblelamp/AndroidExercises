@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.5 dated Dec 09, 2018
+ * @version 0.4.6 dated Dec 23, 2018
  */
 
 import android.content.Context;
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements
         setTitle("  " + date.toString());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName()),
-                    Html.FROM_HTML_MODE_COMPACT));
+                    Html.FROM_HTML_MODE_LEGACY));
         } else {
             textView.setText(Html.fromHtml(text.getFileFromAsset(date.getFileName())));
         }
