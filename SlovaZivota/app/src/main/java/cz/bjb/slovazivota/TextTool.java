@@ -38,7 +38,8 @@ public class TextTool {
                 } else if (counter == 2 || i == lines.length - 1) {
                     lines[i] = wrapStringInTags(lines[i], "i");
                 }
-                sb.append(wrapStringInTags(lines[i], "p"));
+                sb.append((i == lines.length - 1)?
+                        lines[i] : wrapStringInTags(lines[i], "p"));
             }
         }
         return sb.toString();
