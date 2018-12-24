@@ -36,6 +36,7 @@ http://developer.alexanderklimov.ru/android/views/textview.php
 http://developer.alexanderklimov.ru/android/preference.php
 
 ### Publication in Google Play
+https://habr.com/company/livetyping/blog/326874/
 http://developer.alexanderklimov.ru/android/publish.php
 
 ### Welcome to the Google Play badge page
