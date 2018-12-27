@@ -4,6 +4,9 @@ Slova Života - Rozjímejte nad Božím Slovem
 ### Description (short)
 Aplikace „Slova Života“ pomůže vám denně rozjímat nad biblickými texty
 
+### Android Asset Studio (generation of android icons)
+http://romannurik.github.io/AndroidAssetStudio/index.html
+
 ### Lesson 102. Touch processing
 https://startandroid.ru/ru/uroki/vse-uroki-spiskom/167-urok-102-touch-obrabotka-kasanija.html
 
