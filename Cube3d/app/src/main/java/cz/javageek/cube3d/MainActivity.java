@@ -1,10 +1,10 @@
 package cz.javageek.cube3d;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -18,10 +18,10 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.4 dated Dec 22, 2018
+ * @version 0.0.5 dated Dec 31, 2018
  */
 
-public class MainActivity extends AppCompatActivity implements OnTouchListener {
+public class MainActivity extends Activity implements OnTouchListener {
 
     private static final String DEBUG_TAG = "Cube3D";
 
@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 mouseX = event.getX();
                 mouseY = event.getY();
+
+                if (drawView.touchedExit(mouseX, mouseY))
+                    System.exit(0);
 
                 if (drawView.setColor(mouseX, mouseY))
                     drawView.invalidate();
@@ -129,26 +132,44 @@ public class MainActivity extends AppCompatActivity implements OnTouchListener {
             y -= getHeight() / 2;
 
             for (int i = 0; i < nodes.length; i++)
-                if (Math.abs(nodes[i][0] - x) < radius*2 && Math.abs(nodes[i][1] - y) < radius*2) {
+                if (abs(nodes[i][0] - x) < radius*2 && abs(nodes[i][1] - y) < radius*2) {
                     nodes[i][3] = 1 - nodes[i][3];
                     return true;
                 }
             return false;
         }
 
+        private boolean touchedExit(double x, double y) {
+            return (abs(getWidth() - 18 - x) < 12 && abs(15 - y) < 12);
+        }
+
         @Override
         protected void onDraw(Canvas canvas) {
-            canvas.translate(getWidth() / 2, getHeight() / 2);
             canvas.drawColor(Color.BLACK);
 
             paint.setColor(Color.WHITE);
+            paint.setTextSize(22);
+            canvas.drawText("Cube 3D", 10, 24, paint);
 
+            paint.setColor(Color.WHITE);
+            canvas.drawCircle(getWidth() - 18, 15, 12, paint);
+            canvas.drawCircle(getWidth() - 47, 15, 12, paint);
+
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(12);
+            canvas.drawText("X", getWidth() - 21, 20, paint);
+            canvas.drawText("?", getWidth() - 50, 20, paint);
+
+            canvas.translate(getWidth() / 2, getHeight() / 2);
+
+            paint.setColor(Color.GRAY);
             for (int[] edge : edges) {
                 double[] xy1 = nodes[edge[0]];
                 double[] xy2 = nodes[edge[1]];
                 canvas.drawLine(round(xy1[0]), round(xy1[1]), round(xy2[0]), round(xy2[1]), paint);
             }
 
+            paint.setStyle(Paint.Style.FILL_AND_STROKE);
             for (double[] node : nodes) {
                 paint.setColor((node[3] == 0)? Color.WHITE : Color.RED);
                 canvas.drawCircle(round(node[0]), round(node[1]), radius, paint);
