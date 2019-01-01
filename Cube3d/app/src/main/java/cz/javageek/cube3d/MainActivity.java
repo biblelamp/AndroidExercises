@@ -2,10 +2,13 @@ package cz.javageek.cube3d;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -18,7 +21,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.5 dated Dec 31, 2018
+ * @version 0.0.6 dated Jan 01, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -48,6 +51,22 @@ public class MainActivity extends Activity implements OnTouchListener {
             case MotionEvent.ACTION_DOWN:
                 mouseX = event.getX();
                 mouseY = event.getY();
+
+                if (drawView.touchedAbout(mouseX, mouseY)) {
+                    Builder builder = new Builder(MainActivity.this);
+                    builder.setTitle(R.string.app_name)
+                            .setIcon(R.mipmap.ic_launcher)
+                            .setMessage(R.string.app_description)
+                            .setCancelable(false)
+                            .setNegativeButton(R.string.btn_ok,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
 
                 if (drawView.touchedExit(mouseX, mouseY))
                     System.exit(0);
@@ -139,6 +158,10 @@ public class MainActivity extends Activity implements OnTouchListener {
             return false;
         }
 
+        private boolean touchedAbout(double x, double y) {
+            return (abs(getWidth() - 47 - x) < 12 && abs(15 - y) < 12);
+        }
+
         private boolean touchedExit(double x, double y) {
             return (abs(getWidth() - 18 - x) < 12 && abs(15 - y) < 12);
         }
@@ -162,7 +185,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
             canvas.translate(getWidth() / 2, getHeight() / 2);
 
-            paint.setColor(Color.GRAY);
+            paint.setColor(Color.WHITE);
             for (int[] edge : edges) {
                 double[] xy1 = nodes[edge[0]];
                 double[] xy2 = nodes[edge[1]];
