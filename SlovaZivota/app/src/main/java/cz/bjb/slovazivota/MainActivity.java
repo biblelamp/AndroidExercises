@@ -4,7 +4,7 @@ package cz.bjb.slovazivota;
  * Java. Slova Života - Rozjímejte nad Božím Slovem
  *
  * @author Sergey Iryupin
- * @version 0.4.6 dated Dec 23, 2018
+ * @version 0.4.6 dated Jan 01, 2019
  */
 
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements
                 textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
                 return true;
             case R.id.about:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                Builder builder = new Builder(MainActivity.this);
                 builder.setTitle(R.string.app_name)
                         .setIcon(R.mipmap.ic_launcher)
                         .setMessage(getString(R.string.app_description) + "\n" +
