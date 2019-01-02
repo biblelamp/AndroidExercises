@@ -159,29 +159,32 @@ public class MainActivity extends Activity implements OnTouchListener {
         }
 
         private boolean touchedAbout(double x, double y) {
-            return (abs(getWidth() - 47 - x) < 12 && abs(15 - y) < 12);
+            return (abs(getWidth() - 52 - x) < 12 && abs(28 - y) < 12);
         }
 
         private boolean touchedExit(double x, double y) {
-            return (abs(getWidth() - 18 - x) < 12 && abs(15 - y) < 12);
+            return (abs(getWidth() - 20 - x) < 12 && abs(28 - y) < 12);
         }
 
         @Override
         protected void onDraw(Canvas canvas) {
             canvas.drawColor(Color.BLACK);
 
-            paint.setColor(Color.WHITE);
-            paint.setTextSize(22);
-            canvas.drawText("Cube 3D", 10, 24, paint);
+            paint.setColor(Color.rgb(0x3f, 0x51, 0xb5));
+            canvas.drawRect(0, 0, getWidth(), 55, paint);
 
             paint.setColor(Color.WHITE);
-            canvas.drawCircle(getWidth() - 18, 15, 12, paint);
-            canvas.drawCircle(getWidth() - 47, 15, 12, paint);
+            paint.setTextSize(20);
+            canvas.drawText("Cube 3D", 18, 35, paint);
+
+            paint.setColor(Color.WHITE);
+            canvas.drawCircle(getWidth() - 20, 28, 12, paint);
+            canvas.drawCircle(getWidth() - 52, 28, 12, paint);
 
             paint.setColor(Color.BLACK);
             paint.setTextSize(12);
-            canvas.drawText("X", getWidth() - 21, 20, paint);
-            canvas.drawText("?", getWidth() - 50, 20, paint);
+            canvas.drawText("X", getWidth() - 23, 33, paint);
+            canvas.drawText("?", getWidth() - 55, 33, paint);
 
             canvas.translate(getWidth() / 2, getHeight() / 2);
 
