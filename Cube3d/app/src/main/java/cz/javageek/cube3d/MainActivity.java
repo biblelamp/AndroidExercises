@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +20,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.6 dated Jan 01, 2019
+ * @version 0.0.7 dated Jan 02, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -71,7 +70,7 @@ public class MainActivity extends Activity implements OnTouchListener {
                 if (drawView.touchedExit(mouseX, mouseY))
                     System.exit(0);
 
-                if (drawView.setColor(mouseX, mouseY))
+                if (drawView.changeColor(mouseX, mouseY))
                     drawView.invalidate();
 
                 break;
@@ -146,7 +145,7 @@ public class MainActivity extends Activity implements OnTouchListener {
             rotateCube(PI / 5, PI / 9);
         }
 
-        private boolean setColor(double x, double y) {
+        private boolean changeColor(double x, double y) {
             x -= getWidth() / 2;
             y -= getHeight() / 2;
 
