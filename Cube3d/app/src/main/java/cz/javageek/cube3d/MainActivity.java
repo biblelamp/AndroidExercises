@@ -20,7 +20,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.7 dated Jan 02, 2019
+ * @version 0.0.8 dated Jan 04, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -124,10 +124,35 @@ public class MainActivity extends Activity implements OnTouchListener {
         }
     }
 
+    class CircleButton {
+
+        float x, y, radius;
+        String text;
+        float xText, yText;
+
+        public CircleButton(float x, float y, float radius, String text, float xText, float yText) {
+            this.x = x;
+            this.y = y;
+            this.radius = radius;
+            this.text = text;
+            this.xText = xText;
+            this.yText = yText;
+        }
+
+        public void draw(Canvas canvas, Paint paint) {
+            paint.setColor(Color.WHITE);
+            canvas.drawCircle(x, y, radius, paint);
+            paint.setColor(Color.BLACK);
+            paint.setTextSize(12);
+            canvas.drawText(text, xText, yText, paint);
+        }
+    }
+
     class DrawView extends View {
 
         Paint paint;
         int radius;
+        CircleButton btnExit;
 
         public DrawView(Context context) {
             super(context);
@@ -140,6 +165,8 @@ public class MainActivity extends Activity implements OnTouchListener {
             scale(min(width, height) / 4);
 
             radius = min(width, height) / 32;
+
+            btnExit = new CircleButton(width - 20, 28, 12, "X", width - 23, 33);
 
             //Log.d(DEBUG_TAG, width + ":" + height);
             rotateCube(PI / 5, PI / 9);
@@ -176,13 +203,15 @@ public class MainActivity extends Activity implements OnTouchListener {
             paint.setTextSize(20);
             canvas.drawText("Cube 3D", 18, 35, paint);
 
+            btnExit.draw(canvas, paint);
+
             paint.setColor(Color.WHITE);
-            canvas.drawCircle(getWidth() - 20, 28, 12, paint);
+            //canvas.drawCircle(getWidth() - 20, 28, 12, paint);
             canvas.drawCircle(getWidth() - 52, 28, 12, paint);
 
             paint.setColor(Color.BLACK);
             paint.setTextSize(12);
-            canvas.drawText("X", getWidth() - 23, 33, paint);
+            //canvas.drawText("X", getWidth() - 23, 33, paint);
             canvas.drawText("?", getWidth() - 55, 33, paint);
 
             canvas.translate(getWidth() / 2, getHeight() / 2);
