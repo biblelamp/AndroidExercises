@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import static java.lang.Math.abs;
+
 public class CircleButton {
 
     float x, y, radius;
@@ -17,6 +19,10 @@ public class CircleButton {
         this.text = text;
         this.xText = xText;
         this.yText = yText;
+    }
+
+    public boolean isClick(double x, double y) {
+        return (abs(this.x - x) < radius && abs(this.y - y) < radius);
     }
 
     public void draw(Canvas canvas, Paint paint) {
