@@ -20,7 +20,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.9 dated Jan 06, 2019
+ * @version 0.0.10 dated Jan 07, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -165,7 +165,7 @@ public class MainActivity extends Activity implements OnTouchListener {
         }
 
         private boolean touchedExit(double x, double y) {
-            return (abs(getWidth() - 20 - x) < 12 && abs(28 - y) < 12);
+            return btnExit.isClick(x, y);
         }
 
         @Override
