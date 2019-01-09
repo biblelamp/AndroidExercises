@@ -20,7 +20,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.10 dated Jan 07, 2019
+ * @version 0.0.11 dated Jan 09, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -128,7 +128,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
         Paint paint;
         int radius;
-        CircleButton btnExit;
+        CircleButton btnAbout, btnExit;
 
         public DrawView(Context context) {
             super(context);
@@ -142,6 +142,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 
             radius = min(width, height) / 32;
 
+            btnAbout = new CircleButton(width - 52, 28, 12, "?", width - 55, 33);
             btnExit = new CircleButton(width - 20, 28, 12, "X", width - 23, 33);
 
             //Log.d(DEBUG_TAG, width + ":" + height);
@@ -161,7 +162,7 @@ public class MainActivity extends Activity implements OnTouchListener {
         }
 
         private boolean touchedAbout(double x, double y) {
-            return (abs(getWidth() - 52 - x) < 12 && abs(28 - y) < 12);
+            return btnAbout.isClick(x, y);
         }
 
         private boolean touchedExit(double x, double y) {
@@ -179,16 +180,8 @@ public class MainActivity extends Activity implements OnTouchListener {
             paint.setTextSize(20);
             canvas.drawText("Cube 3D", 18, 35, paint);
 
+            btnAbout.draw(canvas, paint);
             btnExit.draw(canvas, paint);
-
-            paint.setColor(Color.WHITE);
-            //canvas.drawCircle(getWidth() - 20, 28, 12, paint);
-            canvas.drawCircle(getWidth() - 52, 28, 12, paint);
-
-            paint.setColor(Color.BLACK);
-            paint.setTextSize(12);
-            //canvas.drawText("X", getWidth() - 23, 33, paint);
-            canvas.drawText("?", getWidth() - 55, 33, paint);
 
             canvas.translate(getWidth() / 2, getHeight() / 2);
 
