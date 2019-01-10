@@ -8,7 +8,7 @@ import static java.lang.Math.abs;
 
 public class CircleButton {
 
-    float x, y, radius;
+    float x, y, radius, radiusExt;
     String text;
     float xText, yText;
 
@@ -16,13 +16,14 @@ public class CircleButton {
         this.x = x;
         this.y = y;
         this.radius = radius;
+        this.radiusExt = radius + 2;
         this.text = text;
         this.xText = xText;
         this.yText = yText;
     }
 
     public boolean isClick(double x, double y) {
-        return (abs(this.x - x) < radius && abs(this.y - y) < radius);
+        return (abs(this.x - x) < radiusExt && abs(this.y - y) < radiusExt);
     }
 
     public void draw(Canvas canvas, Paint paint) {
