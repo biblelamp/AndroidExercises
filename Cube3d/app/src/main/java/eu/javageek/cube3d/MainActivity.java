@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +21,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.11 dated Jan 09, 2019
+ * @version 0.0.12 dated Jan 10, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -127,8 +128,10 @@ public class MainActivity extends Activity implements OnTouchListener {
     class DrawView extends View {
 
         Paint paint;
-        int radius;
         CircleButton btnAbout, btnExit;
+        float heightTitle;
+        float titleTextSize;
+        float radius;
 
         public DrawView(Context context) {
             super(context);
@@ -140,12 +143,14 @@ public class MainActivity extends Activity implements OnTouchListener {
 
             scale(min(width, height) / 4);
 
+            heightTitle = height / 8.73f;
+            titleTextSize = height / 24;
             radius = min(width, height) / 32;
 
-            btnAbout = new CircleButton(width - 52, 28, 12, "?", width - 55, 33);
-            btnExit = new CircleButton(width - 20, 28, 12, "X", width - 23, 33);
+            btnAbout = new CircleButton(width - 52, 28, radius, "?", width - 55, 33);
+            btnExit = new CircleButton(width - 20, 28, radius, "X", width - 23, 33);
 
-            //Log.d(DEBUG_TAG, width + ":" + height);
+            Log.d(DEBUG_TAG, width + ":" + height + ":" + radius);
             rotateCube(PI / 5, PI / 9);
         }
 
@@ -174,11 +179,12 @@ public class MainActivity extends Activity implements OnTouchListener {
             canvas.drawColor(Color.BLACK);
 
             paint.setColor(Color.rgb(0x3f, 0x51, 0xb5));
-            canvas.drawRect(0, 0, getWidth(), 55, paint);
+            canvas.drawRect(0, 0, getWidth(), heightTitle, paint);
 
             paint.setColor(Color.WHITE);
-            paint.setTextSize(20);
-            canvas.drawText("Cube 3D", 18, 35, paint);
+            paint.setTextSize(titleTextSize);
+            canvas.drawText("Cube 3D", heightTitle / 3,
+                    (heightTitle - titleTextSize) / 2.3f + titleTextSize, paint);
 
             btnAbout.draw(canvas, paint);
             btnExit.draw(canvas, paint);
