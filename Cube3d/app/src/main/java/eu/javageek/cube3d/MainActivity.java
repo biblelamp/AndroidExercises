@@ -1,4 +1,4 @@
-package cz.javageek.cube3d;
+package eu.javageek.cube3d;
 
 import android.app.Activity;
 import android.content.Context;

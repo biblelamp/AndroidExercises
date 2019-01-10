@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cz.javageek.cube3d">
+          package="eu.javageek.cube3d">
 
     <application
             android:allowBackup="true"
