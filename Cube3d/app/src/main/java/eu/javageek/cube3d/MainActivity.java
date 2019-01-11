@@ -53,26 +53,16 @@ public class MainActivity extends Activity implements OnTouchListener {
                 mouseY = event.getY();
 
                 if (drawView.touchedAbout(mouseX, mouseY)) {
-                    Builder builder = new Builder(MainActivity.this);
-                    builder.setTitle(R.string.app_name)
-                            .setIcon(R.mipmap.ic_launcher)
-                            .setMessage(R.string.app_description)
-                            .setCancelable(false)
-                            .setNegativeButton(R.string.btn_ok,
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            dialog.cancel();
-                                        }
-                                    });
-                    AlertDialog alert = builder.create();
-                    alert.show();
+                    showAlert(R.string.app_description);
                 }
 
-                if (drawView.touchedExit(mouseX, mouseY))
+                if (drawView.touchedExit(mouseX, mouseY)) {
                     System.exit(0);
+                }
 
-                if (drawView.changeColor(mouseX, mouseY))
+                if (drawView.changeColor(mouseX, mouseY)) {
                     drawView.invalidate();
+                }
 
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -93,6 +83,22 @@ public class MainActivity extends Activity implements OnTouchListener {
                 break;
         }
         return true;
+    }
+
+    private void showAlert(int message) {
+        Builder builder = new Builder(MainActivity.this);
+        builder.setTitle(R.string.app_name)
+                .setIcon(R.mipmap.ic_launcher)
+                .setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton(R.string.btn_ok,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void scale(double s) {
