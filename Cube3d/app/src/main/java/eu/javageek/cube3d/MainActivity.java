@@ -52,6 +52,13 @@ public class MainActivity extends Activity implements OnTouchListener {
                 mouseX = event.getX();
                 mouseY = event.getY();
 
+                if (drawView.touchedClear(mouseX, mouseY)) {
+                    for (double[] node : nodes) {
+                        node[3] = 0;
+                    }
+                    drawView.invalidate();
+                }
+
                 if (drawView.touchedAbout(mouseX, mouseY)) {
                     showAlert(R.string.app_description);
                 }
@@ -134,7 +141,7 @@ public class MainActivity extends Activity implements OnTouchListener {
     class DrawView extends View {
 
         Paint paint;
-        CircleButton btnAbout, btnExit;
+        CircleButton btnClear, btnAbout, btnExit;
         float heightTitle;
         float titleTextSize;
         float radius;
@@ -153,8 +160,9 @@ public class MainActivity extends Activity implements OnTouchListener {
             titleTextSize = height / 24;
             radius = min(width, height) / 32;
 
-            btnAbout = new CircleButton(width - radius * 5, heightTitle / 2, radius, "?", width - radius * 5 - 3, heightTitle / 2 + 5);
-            btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", width - radius * 2 - 3, heightTitle / 2 + 5);
+            btnClear = new CircleButton(width - radius * 8, heightTitle /2, radius, "C", -4, 5);
+            btnAbout = new CircleButton(width - radius * 5, heightTitle / 2, radius, "?", -3, 5);
+            btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", -3, 5);
 
             Log.d(DEBUG_TAG, width + ":" + height + ":" + radius);
             rotateCube(PI / 5, PI / 9);
@@ -170,6 +178,10 @@ public class MainActivity extends Activity implements OnTouchListener {
                     return true;
                 }
             return false;
+        }
+
+        private boolean touchedClear(double x, double y) {
+            return btnClear.isClick(x, y);
         }
 
         private boolean touchedAbout(double x, double y) {
@@ -192,6 +204,7 @@ public class MainActivity extends Activity implements OnTouchListener {
             canvas.drawText("Cube 3D", heightTitle / 3,
                     (heightTitle - titleTextSize) / 2.3f + titleTextSize, paint);
 
+            btnClear.draw(canvas, paint);
             btnAbout.draw(canvas, paint);
             btnExit.draw(canvas, paint);
 
