@@ -12,14 +12,14 @@ public class CircleButton {
     String text;
     float xText, yText;
 
-    public CircleButton(float x, float y, float radius, String text, float xText, float yText) {
+    public CircleButton(float x, float y, float radius, String text, float dx, float dy) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.radiusExt = radius + 2;
         this.text = text;
-        this.xText = xText;
-        this.yText = yText;
+        this.xText = x + dx;
+        this.yText = y + dy;
     }
 
     public boolean isClick(double x, double y) {
