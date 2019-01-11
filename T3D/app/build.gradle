@@ -4,7 +4,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "cz.javageek.t3d"
+        applicationId "eu.javageek.t3d"
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 1

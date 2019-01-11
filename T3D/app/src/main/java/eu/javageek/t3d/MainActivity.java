@@ -1,4 +1,4 @@
-package cz.javageek.t3d;
+package eu.javageek.t3d;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
