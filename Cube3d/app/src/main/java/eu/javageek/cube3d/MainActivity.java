@@ -21,7 +21,7 @@ import static java.lang.Math.*;
  * Java. Cube 3D
  *
  * @author Sergey Iryupin
- * @version 0.0.12 dated Jan 10, 2019
+ * @version 0.0.13 dated Jan 11, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -147,8 +147,8 @@ public class MainActivity extends Activity implements OnTouchListener {
             titleTextSize = height / 24;
             radius = min(width, height) / 32;
 
-            btnAbout = new CircleButton(width - 52, 28, radius, "?", width - 55, 33);
-            btnExit = new CircleButton(width - 20, 28, radius, "X", width - 23, 33);
+            btnAbout = new CircleButton(width - radius * 5, heightTitle / 2, radius, "?", width - radius * 5 - 3, heightTitle / 2 + 5);
+            btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", width - radius * 2 - 3, heightTitle / 2 + 5);
 
             Log.d(DEBUG_TAG, width + ":" + height + ":" + radius);
             rotateCube(PI / 5, PI / 9);
