@@ -1,6 +1,5 @@
 package eu.javageek.cube3d;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,24 +11,27 @@ import static java.lang.Math.*;
 
 public class DrawView extends View {
 
-    MainActivity mainActivity;
-    Paint paint;
-    CircleButton btnClear, btnAbout, btnExit;
-    float heightTitle;
-    float titleTextSize;
-    float radius;
+    private double[][] nodes = {{-1, -1, -1, 0}, {-1, -1, 1, 0}, {-1, 1, -1, 0}, {-1, 1, 1, 0},
+            {1, -1, -1, 0}, {1, -1, 1, 0}, {1, 1, -1, 0}, {1, 1, 1, 0}};
+
+    private int[][] edges = {{0, 1}, {1, 3}, {3, 2}, {2, 0}, {4, 5}, {5, 7}, {7, 6},
+            {6, 4}, {0, 4}, {1, 5}, {2, 6}, {3, 7}};
+
+    private Paint paint;
+    private CircleButton btnClear, btnAbout, btnExit;
+    private float heightTitle;
+    private float titleTextSize;
+    private float radius;
 
     public DrawView(MainActivity mainActivity) {
         super(mainActivity);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        this.mainActivity = mainActivity;
-
         Display display = mainActivity.getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
         int height = display.getHeight();
 
-        mainActivity.scale(min(width, height) / 4);
+        scale(min(width, height) / 4);
 
         heightTitle = height / 8.73f;
         titleTextSize = height / 24;
@@ -40,19 +42,55 @@ public class DrawView extends View {
         btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", -3, 5);
 
         //Log.d(mainActivity.DEBUG_TAG, width + ":" + height + ":" + radius);
-        mainActivity.rotateCube(PI / 5, PI / 9);
+        rotate(PI / 5, PI / 9);
+    }
+
+    public void clearNodes() {
+        for (double[] node : nodes) {
+            node[3] = 0;
+        }
     }
 
     public boolean changeColor(double x, double y) {
         x -= getWidth() / 2;
         y -= getHeight() / 2;
 
-        for (int i = 0; i < mainActivity.nodes.length; i++)
-            if (abs(mainActivity.nodes[i][0] - x) < radius*2 && abs(mainActivity.nodes[i][1] - y) < radius*2) {
-                mainActivity.nodes[i][3] = 1 - mainActivity.nodes[i][3];
+        for (int i = 0; i < nodes.length; i++)
+            if (abs(nodes[i][0] - x) < radius*2 && abs(nodes[i][1] - y) < radius*2) {
+                nodes[i][3] = 1 - nodes[i][3];
                 return true;
             }
         return false;
+    }
+
+    private void scale(double s) {
+        for (double[] node : nodes) {
+            node[0] *= s;
+            node[1] *= s;
+            node[2] *= s;
+        }
+    }
+
+    public void rotate(double angleX, double angleY) {
+        double sinX = sin(angleX);
+        double cosX = cos(angleX);
+
+        double sinY = sin(angleY);
+        double cosY = cos(angleY);
+
+        for (double[] node : nodes) {
+            double x = node[0];
+            double y = node[1];
+            double z = node[2];
+
+            node[0] = x * cosX - z * sinX;
+            node[2] = z * cosX + x * sinX;
+
+            z = node[2];
+
+            node[1] = y * cosY - z * sinY;
+            node[2] = z * cosY + y * sinY;
+        }
     }
 
     public boolean touchedClear(double x, double y) {
@@ -86,14 +124,14 @@ public class DrawView extends View {
         canvas.translate(getWidth() / 2, getHeight() / 2);
 
         paint.setColor(Color.WHITE);
-        for (int[] edge : mainActivity.edges) {
-            double[] xy1 = mainActivity.nodes[edge[0]];
-            double[] xy2 = mainActivity.nodes[edge[1]];
+        for (int[] edge : edges) {
+            double[] xy1 = nodes[edge[0]];
+            double[] xy2 = nodes[edge[1]];
             canvas.drawLine(round(xy1[0]), round(xy1[1]), round(xy2[0]), round(xy2[1]), paint);
         }
 
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
-        for (double[] node : mainActivity.nodes) {
+        for (double[] node : nodes) {
             paint.setColor((node[3] == 0)? Color.WHITE : Color.RED);
             canvas.drawCircle(round(node[0]), round(node[1]), radius, paint);
         }
