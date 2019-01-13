@@ -114,7 +114,7 @@ public class DrawView extends View {
 
         paint.setColor(Color.WHITE);
         paint.setTextSize(titleTextSize);
-        canvas.drawText("Cube 3D", heightTitle / 3,
+        canvas.drawText(getResources().getString(R.string.app_name), heightTitle / 3,
                 (heightTitle - titleTextSize) / 2.3f + titleTextSize, paint);
 
         btnClear.draw(canvas, paint);
