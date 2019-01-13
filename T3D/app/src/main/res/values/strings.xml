@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Tic Tac Toe 3D</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_description">Play Tic Tac Toe 3D</string>
+    <string name="btn_ok">OK</string>
 </resources>
