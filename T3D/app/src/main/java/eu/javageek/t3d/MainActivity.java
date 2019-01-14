@@ -19,10 +19,11 @@ import android.view.View.*;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-    public static final String DEBUG_TAG = "Cube3D";
+    public static final String DEBUG_TAG = "T3D";
 
     private DrawView drawView;
     private float mouseX, prevMouseX, mouseY, prevMouseY;
+    private boolean gameOver = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,30 @@ public class MainActivity extends Activity implements OnTouchListener {
                 mouseX = event.getX();
                 mouseY = event.getY();
 
+                if (drawView.changeColor(mouseX, mouseY) && !gameOver) {
+                    drawView.invalidate();
+                    if (drawView.checkWin(1)) {
+                        showAlert(R.string.you_won);
+                        gameOver = true;
+                    } else if (drawView.isCubeFill()) {
+                        showAlert(R.string.sorry_draw);
+                        gameOver = true;
+                    }
+                    if (!gameOver) {
+                        drawView.changeColorAI();
+                        drawView.invalidate();
+                        if (drawView.checkWin(-1)) {
+                            showAlert(R.string.ai_won);
+                            gameOver = true;
+                        } else if (drawView.isCubeFill()) {
+                            showAlert(R.string.sorry_draw);
+                            gameOver = true;
+                        }
+                    }
+                }
+
                 if (drawView.touchedClear(mouseX, mouseY)) {
+                    gameOver = false;
                     drawView.clearNodes();
                     drawView.invalidate();
                 }
@@ -50,10 +74,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 
                 if (drawView.touchedExit(mouseX, mouseY)) {
                     System.exit(0);
-                }
-
-                if (drawView.changeColor(mouseX, mouseY)) {
-                    drawView.invalidate();
                 }
 
                 break;

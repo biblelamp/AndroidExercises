@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Tic Tac Toe 3D</string>
-    <string name="app_description">Play Tic Tac Toe 3D</string>
+    <string name="app_description">Try to play with simple AI</string>
+    <string name="you_won">YOU won!</string>
+    <string name="ai_won">AI won!</string>
+    <string name="sorry_draw">SORRY, draw!</string>
     <string name="btn_ok">OK</string>
 </resources>

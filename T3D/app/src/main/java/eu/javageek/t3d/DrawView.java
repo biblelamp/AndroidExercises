@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 
+import java.util.Random;
+
 import static java.lang.Math.*;
 
 public class DrawView extends View {
@@ -26,6 +28,8 @@ public class DrawView extends View {
     private float titleTextSize;
     private float radius;
 
+    private Random random;
+
     public DrawView(MainActivity mainActivity) {
         super(mainActivity);
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -36,6 +40,8 @@ public class DrawView extends View {
 
         initNodes();
         scale(min(width, height) / 4);
+
+        random = new Random();
 
         heightTitle = height / 8.73f;
         titleTextSize = height / 24;
@@ -72,10 +78,63 @@ public class DrawView extends View {
         y -= getHeight() / 2;
 
         for (int i = 0; i < nodes.length; i++)
-            if (abs(nodes[i][0] - x) < radius*2 && abs(nodes[i][1] - y) < radius*2) {
-                nodes[i][3] = 1 - nodes[i][3];
-                return true;
+            if (abs(nodes[i][0] - x) < radius && abs(nodes[i][1] - y) < radius) {
+                if (nodes[i][3] == 0) {
+                    nodes[i][3] = 1 - nodes[i][3];
+                    return true;
+                }
             }
+        return false;
+    }
+
+    public void changeColorAI() {
+        int i;
+        do {
+            i = random.nextInt(nodes.length);
+        } while (nodes[i][3] != 0);
+        nodes[i][3] = -1;
+    }
+
+    public boolean isCubeFill() {
+        for (double[] node : nodes)
+            if (node[3] == 0)
+                return false;
+        return true;
+    }
+
+    public boolean checkWin(int sign) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                // checking Z axis
+                if ((nodes[i*9 + j*3][3] + nodes[i*9+1 + j*3][3] + nodes[i*9+2 + j*3][3] == sign*3) ||
+                        // checking Y axis
+                        (nodes[i + j*9][3] + nodes[i + j*9 + 3][3] + nodes[i + j*9 + 6][3] == sign*3))
+                    return true;
+        // checking X axis
+        for (int i = 0; i < 9; i++)
+            if (nodes[i][3] + nodes[i + 9][3] + nodes[i + 18][3] == sign*3)
+                return true;
+        // checking diagonals of surfaces
+        if ((nodes[0][3] + nodes[4][3] + nodes[8][3] == sign*3) ||
+                (nodes[0][3] + nodes[10][3] + nodes[20][3] == sign*3) ||
+                (nodes[0][3] + nodes[12][3] + nodes[24][3] == sign*3) ||
+                (nodes[2][3] + nodes[4][3] + nodes[6][3] == sign*3) ||
+                (nodes[2][3] + nodes[10][3] + nodes[18][3] == sign*3) ||
+                (nodes[2][3] + nodes[14][3] + nodes[26][3] == sign*3) ||
+                (nodes[6][3] + nodes[12][3] + nodes[18][3] == sign*3) ||
+                (nodes[6][3] + nodes[16][3] + nodes[26][3] == sign*3) ||
+                (nodes[8][3] + nodes[14][3] + nodes[20][3] == sign*3) ||
+                (nodes[8][3] + nodes[16][3] + nodes[24][3] == sign*3) ||
+                (nodes[18][3] + nodes[22][3] + nodes[26][3] == sign*3) ||
+                (nodes[20][3] + nodes[22][3] + nodes[24][3] == sign*3))
+            return true;
+        // checking internal diagonals
+        for (int i = 0; i < 9; i++)
+            if (nodes[i][3] + nodes[13][3] + nodes[26 - i][3] == sign*3)
+                return true;
+        if ((nodes[9][3] + nodes[13][3] + nodes[17][3] == sign*3) ||
+                (nodes[11][3] + nodes[13][3] + nodes[15][3] == sign*3))
+            return true;
         return false;
     }
 
@@ -148,8 +207,13 @@ public class DrawView extends View {
 
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         for (double[] node : nodes) {
-            paint.setColor((node[3] == 0)? Color.WHITE : Color.RED);
-            canvas.drawCircle(round(node[0]), round(node[1]), radius, paint);
+            if (node[3] == 0) {
+                paint.setColor(Color.WHITE);
+                canvas.drawCircle(round(node[0]), round(node[1]), radius / 3, paint);
+            } else {
+                paint.setColor((node[3] < 0) ? Color.RED : Color.BLUE);
+                canvas.drawCircle(round(node[0]), round(node[1]), radius, paint);
+            }
         }
     }
 }
