@@ -14,7 +14,7 @@ import android.view.View.*;
  * Java. Tic tac toe 3D
  *
  * @author Sergey Iryupin
- * @version 0.1.0 dated Jan 13, 2019
+ * @version 0.1.1 dated Jan 17, 2019
  */
 
 public class MainActivity extends Activity implements OnTouchListener {
@@ -40,24 +40,26 @@ public class MainActivity extends Activity implements OnTouchListener {
                 mouseX = event.getX();
                 mouseY = event.getY();
 
-                if (drawView.changeColor(mouseX, mouseY) && !gameOver) {
-                    drawView.invalidate();
-                    if (drawView.checkWin(1)) {
-                        showAlert(R.string.you_won);
-                        gameOver = true;
-                    } else if (drawView.isCubeFill()) {
-                        showAlert(R.string.sorry_draw);
-                        gameOver = true;
-                    }
-                    if (!gameOver) {
-                        drawView.changeColorAI();
+                if (!gameOver) {
+                    if (drawView.changeColor(mouseX, mouseY)) {
                         drawView.invalidate();
-                        if (drawView.checkWin(-1)) {
-                            showAlert(R.string.ai_won);
+                        if (drawView.checkWin(1)) {
+                            showAlert(R.string.you_won);
                             gameOver = true;
                         } else if (drawView.isCubeFill()) {
                             showAlert(R.string.sorry_draw);
                             gameOver = true;
+                        }
+                        if (!gameOver) {
+                            drawView.changeColorAI();
+                            drawView.invalidate();
+                            if (drawView.checkWin(-1)) {
+                                showAlert(R.string.ai_won);
+                                gameOver = true;
+                            } else if (drawView.isCubeFill()) {
+                                showAlert(R.string.sorry_draw);
+                                gameOver = true;
+                            }
                         }
                     }
                 }
