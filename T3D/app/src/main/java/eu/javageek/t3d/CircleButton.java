@@ -10,9 +10,9 @@ public class CircleButton {
 
     float x, y, radius, radiusExt;
     String text;
-    float xText, yText;
+    float xText, yText, textSize;
 
-    public CircleButton(float x, float y, float radius, String text, float dx, float dy) {
+    public CircleButton(float x, float y, float radius, String text, float dx, float dy, float textSize) {
         this.x = x;
         this.y = y;
         this.radius = radius;
@@ -20,6 +20,7 @@ public class CircleButton {
         this.text = text;
         this.xText = x + dx;
         this.yText = y + dy;
+        this.textSize = textSize;
     }
 
     public boolean isClick(double x, double y) {
@@ -30,7 +31,7 @@ public class CircleButton {
         paint.setColor(Color.WHITE);
         canvas.drawCircle(x, y, radius, paint);
         paint.setColor(Color.BLACK);
-        paint.setTextSize(12);
+        paint.setTextSize(textSize);
         canvas.drawText(text, xText, yText, paint);
     }
 }

@@ -5,4 +5,5 @@
     <string name="ai_won">AI won!</string>
     <string name="sorry_draw">SORRY, draw!</string>
     <string name="btn_ok">OK</string>
+    <dimen name="fontSize">12sp</dimen>
 </resources>
