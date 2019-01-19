@@ -49,9 +49,9 @@ public class DrawView extends View {
 
         float buttonTextSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
 
-        btnClear = new CircleButton(width - radius * 8, heightTitle /2, radius, "C", -4, 5, buttonTextSize);
-        btnAbout = new CircleButton(width - radius * 5, heightTitle / 2, radius, "?", -3, 5, buttonTextSize);
-        btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", -3, 5, buttonTextSize);
+        btnClear = new CircleButton(width - radius * 8, heightTitle / 2, radius, "C", buttonTextSize);
+        btnAbout = new CircleButton(width - radius * 5, heightTitle / 2, radius, "?", buttonTextSize);
+        btnExit = new CircleButton(width - radius * 2, heightTitle / 2, radius, "X", buttonTextSize);
 
         //Log.d(mainActivity.DEBUG_TAG, width + ":" + height + ":" + radius);
         rotate(PI / 5, PI / 9);
