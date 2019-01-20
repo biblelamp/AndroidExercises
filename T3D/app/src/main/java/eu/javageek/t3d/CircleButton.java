@@ -8,9 +8,10 @@ import static java.lang.Math.abs;
 
 public class CircleButton {
 
-    float x, y, radius, radiusExt;
-    String text;
-    float textSize;
+    private float x, y, radius, radiusExt;
+    private String text;
+    private float textSize;
+    private int btnColor;
 
     public CircleButton(float x, float y, float radius, String text, float textSize) {
         this.x = x;
@@ -19,6 +20,11 @@ public class CircleButton {
         this.radiusExt = radius + 2;
         this.text = text;
         this.textSize = textSize;
+        this.btnColor = Color.WHITE;
+    }
+
+    public void setBtnColor(int btnColor) {
+        this.btnColor = btnColor;
     }
 
     public boolean isClick(double x, double y) {
@@ -26,7 +32,7 @@ public class CircleButton {
     }
 
     public void draw(Canvas canvas, Paint paint) {
-        paint.setColor(Color.WHITE);
+        paint.setColor(btnColor);
         canvas.drawCircle(x, y, radius, paint);
         paint.setColor(Color.BLACK);
         paint.setTextSize(textSize);
