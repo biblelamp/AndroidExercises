@@ -27,6 +27,7 @@ public class DrawView extends View {
     private float heightTitle;
     private float titleTextSize;
     private float radius;
+    private float sensitivity;
 
     private Random random;
 
@@ -46,6 +47,8 @@ public class DrawView extends View {
         heightTitle = height / 8.73f;
         titleTextSize = height / 24;
         radius = min(width, height) / 32;
+
+        sensitivity = 1.5f;
 
         float buttonTextSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
 
@@ -80,7 +83,7 @@ public class DrawView extends View {
         y -= getHeight() / 2;
 
         for (int i = 0; i < nodes.length; i++)
-            if (abs(nodes[i][0] - x) < radius && abs(nodes[i][1] - y) < radius) {
+            if (abs(nodes[i][0] - x) < radius * sensitivity && abs(nodes[i][1] - y) < radius * sensitivity) {
                 if (nodes[i][3] == 0) {
                     nodes[i][3] = 1 - nodes[i][3];
                     return true;
