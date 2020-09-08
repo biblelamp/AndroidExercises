@@ -1,11 +1,18 @@
-import java.util.*;
-import java.io.*;
-import java.nio.file.*;
-import java.nio.charset.*;
-import java.lang.reflect.Field;
+/**
+ * The program divides the text into files by month and day
+ *
+ * for starting in Windows command line:
+ *   java -Dfile.encoding=UTF-8 FileSZSplitter
+ */
 
-// for Windows:
-// java -Dfile.encoding=UTF-8 FileSZSplitter
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 class FileSZSplitter {
     static final String PATH = "C:/Users/lamp/AndroidExercises/SlovaZivota/app/src/main/assets/2021/";
