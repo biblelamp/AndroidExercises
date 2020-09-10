@@ -22,29 +22,41 @@ class FileSZSplitter {
         "července", "srpna", "září", "října", "listopadu", "prosince"};
 
     public static void main(String[] args) throws IOException {
-        int numMonth = -1;
-        int numDay = -1;
+        int numMonth = 0;
+        int numDay = 0;
+        int dayOfWeek = -1;
         StringBuffer sb = new StringBuffer();
-        List<String> monthsList = Arrays.asList(MONTHS);
+        List<String> dayList = Arrays.asList(DAYS);
+        List<String> monthList = Arrays.asList(MONTHS);
         List<String> lines = Files.readAllLines(Paths.get(FILE_NAME), StandardCharsets.UTF_8);
 
         for (String line: lines) {
             String[] fields = line.split(" "); // sobota – 29. prosince
             if (fields.length > 3) {
+                String day = fields[0];
                 String month = fields[3];
-                if (monthsList.contains(month)) {
-                    System.out.println(line);
-                    //System.out.println(Arrays.toString(fields));
-                    if (numMonth > -1) {
+                if (dayList.contains(day) && monthList.contains(month)) {
+                    // checking the day of the week
+                    if (dayOfWeek < 0) {
+                        dayOfWeek = dayList.indexOf(day);
+                    } else {
+                        dayOfWeek = dayOfWeek == 6 ? 0 : dayOfWeek + 1;
+                    }
+                    if (!day.equals(DAYS[dayOfWeek])) {
+                        System.out.printf("Error is %s %s %s\n", day, fields[2], month);
+                        return;
+                    }
+                    System.out.println(line); // title of current day
+                    if (numMonth > 0) {
                         sb.delete(0, sb.indexOf("\n\n") + 2);
                         String fileName = PATH + Integer.toString(numMonth) + "/" + Integer.toString(numDay) + ".txt";
                         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileName), StandardCharsets.UTF_8)) {
                             writer.append(sb.toString().trim());
                         }
-                        sb.setLength(0);
+                        sb.setLength(0); // clear
                     }
                     numDay = (int) Float.parseFloat(fields[2]);
-                    numMonth = monthsList.indexOf(month);
+                    numMonth = monthList.indexOf(month);
                     File folder = new File(PATH + Integer.toString(numMonth));
                     folder.mkdirs();
                 }
