@@ -22,7 +22,7 @@ class FileSZSplitter {
         "července", "srpna", "září", "října", "listopadu", "prosince"};
 
     public static void main(String[] args) throws IOException {
-        int numMonth = 0;
+        int numMonth = -1;
         int numDay = 0;
         int dayOfWeek = -1;
         StringBuffer sb = new StringBuffer();
@@ -47,7 +47,7 @@ class FileSZSplitter {
                         return;
                     }
                     System.out.println(line); // title of current day
-                    if (numMonth > 0) {
+                    if (numMonth > -1) {
                         sb.delete(0, sb.indexOf("\n\n") + 2);
                         String fileName = PATH + Integer.toString(numMonth) + "/" + Integer.toString(numDay) + ".txt";
                         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(fileName), StandardCharsets.UTF_8)) {
