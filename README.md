@@ -10,5 +10,8 @@ http://developer.alexanderklimov.ru/android/
 ## How to make an Android application yourself (RU)
 https://skillbox.ru/media/code/kak_sdelat_prilozhenie_dlya_android/
 
-## The Ultimate Guide to Android Bluetooth Low Energy
+## Making Android BLE work (RU), Mar 23, 2019
+https://habr.com/ru/post/536392/
+
+## The Ultimate Guide to Android Bluetooth Low Energy, May 15, 2020
 https://punchthrough.com/android-ble-guide/
