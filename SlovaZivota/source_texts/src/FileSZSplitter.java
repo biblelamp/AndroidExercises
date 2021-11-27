@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 class FileSZSplitter {
-    static final String PATH = "C:/Users/lamp/AndroidExercises/SlovaZivota/app/src/main/assets/2021/";
-    static final String FILE_NAME = "C:/Users/lamp/AndroidExercises/SlovaZivota/source_texts/Slova_zivota_2021.txt";
+    static final String PATH = "C:/Users/lamp/AndroidExercises/SlovaZivota/app/src/main/assets/2022/";
+    static final String FILE_NAME = "C:/Users/lamp/AndroidExercises/SlovaZivota/source_texts/Slova_zivota_2022.txt";
     static final String[] DAYS = {"pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota", "neděle"};
     static final String[] MONTHS = {"ledna", "února", "března", "dubna", "května", "června",
         "července", "srpna", "září", "října", "listopadu", "prosince"};
@@ -30,7 +30,7 @@ class FileSZSplitter {
         List<String> monthList = Arrays.asList(MONTHS);
         List<String> lines = Files.readAllLines(Paths.get(FILE_NAME), StandardCharsets.UTF_8);
 
-        for (String line: lines) {
+        for (String line : lines) {
             String[] fields = line.split(" "); // sobota – 29. prosince
             if (fields.length > 3) {
                 String day = fields[0];
