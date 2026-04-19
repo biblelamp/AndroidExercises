@@ -1,6 +1,7 @@
 # Built application files
 *.apk
 *.ap_
+*.aab
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -34,7 +35,23 @@ captures/
 
 # Intellij
 *.iml
-.idea
+.idea/
 
-# Keystore files
+# Keystore files — never commit these!
 *.jks
+*.keystore
+
+# Keystore credentials file — never commit this!
+keystore.properties
+
+# Google services config (contains API keys)
+google-services.json
+
+# DS_Store (macOS)
+.DS_Store
+
+# Windows thumbnail cache
+Thumbs.db
+
+# Gradle wrapper (optional, keep if you want reproducible builds)
+# gradle/wrapper/gradle-wrapper.jar
