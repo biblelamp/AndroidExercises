@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +16,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.SpanStyle
@@ -172,6 +174,35 @@ fun loadCachedEventDetail(context: Context, url: String): EventDetail? {
     } catch (_: Exception) { null }
 }
 
+// ─── Иконка приложения ────────────────────────────────────────────────────────
+
+@Composable
+fun AppIcon(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val bitmap = remember {
+        androidx.core.content.res.ResourcesCompat.getDrawable(
+            context.resources, R.mipmap.ic_launcher_round, context.theme
+        )?.let { drawable ->
+            val bmp = android.graphics.Bitmap.createBitmap(
+                drawable.intrinsicWidth, drawable.intrinsicHeight,
+                android.graphics.Bitmap.Config.ARGB_8888
+            )
+            android.graphics.Canvas(bmp).also {
+                drawable.setBounds(0, 0, it.width, it.height)
+                drawable.draw(it)
+            }
+            bmp
+        }
+    }
+    if (bitmap != null) {
+        Image(
+            bitmap             = bitmap.asImageBitmap(),
+            contentDescription = "Vitrazeart",
+            modifier           = modifier
+        )
+    }
+}
+
 // ─── Activity ─────────────────────────────────────────────────────────────────
 
 class MainActivity : ComponentActivity() {
@@ -229,7 +260,15 @@ fun VitrazeArtApp() {
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title  = { Text("Пражские Витражи — Анонсы") },
+                    title = {
+                        Row(
+                            verticalAlignment     = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            AppIcon(modifier = Modifier.size(32.dp))
+                            Text("Пражские Витражи — Анонсы")
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
                     )
@@ -348,7 +387,9 @@ fun EventDetailScreen(event: Event, onBack: () -> Unit) {
                          maxLines = 1, overflow = TextOverflow.Ellipsis)
                 },
                 navigationIcon = {
-                    TextButton(onClick = onBack) { Text("← Назад") }
+                    IconButton(onClick = onBack) {
+                        AppIcon(modifier = Modifier.size(32.dp))
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer
