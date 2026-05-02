@@ -4,6 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import cz.vitrazeart.app.model.ContentBlock
+import cz.vitrazeart.app.model.Event
+import cz.vitrazeart.app.model.EventDetail
+import cz.vitrazeart.app.model.TextSpan
 import cz.vitrazeart.app.ui.VitrazeArtApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,33 +27,6 @@ private const val PREFS_NAME      = "vitrazeart_cache"
 private const val KEY_EVENTS_LIST = "events_list"
 private const val KEY_DETAIL_PFX  = "detail_"
 
-// ─── Модели ───────────────────────────────────────────────────────────────────
-
-data class Event(
-    val title: String,
-    val date: String,
-    val description: String,
-    val url: String
-)
-
-data class EventDetail(
-    val title: String,
-    val datePlace: String,
-    val imageUrl: String?,
-    val contentBlocks: List<ContentBlock>
-)
-
-sealed class ContentBlock {
-    data class Paragraph(val spans: List<TextSpan>) : ContentBlock()
-    object HorizontalRule : ContentBlock()
-}
-
-data class TextSpan(
-    val text: String,
-    val href: String? = null,
-    val bold: Boolean = false
-)
-
 // ─── Кэш: список анонсов ─────────────────────────────────────────────────────
 // SharedPreferences хранятся на диске устройства и переживают закрытие
 // приложения, перезагрузку телефона и т.д.
@@ -63,6 +40,9 @@ fun saveEventsList(context: Context, events: List<Event>) {
             put("date",        e.date)
             put("description", e.description)
             put("url",         e.url)
+            e.imageUrl?.let {
+                put("imageUrl", it)
+            }
         })
     }
     context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -76,8 +56,11 @@ fun loadCachedEventsList(context: Context): List<Event>? {
         val arr = JSONArray(json)
         List(arr.length()) { i ->
             arr.getJSONObject(i).let { o ->
-                Event(o.getString("title"), o.getString("date"),
-                      o.getString("description"), o.getString("url"))
+                Event(
+                    o.getString("title"),
+                    o.getString("date"),
+                    o.getString("description"),
+                    o.getString("url"))
             }
         }
     } catch (_: Exception) { null }
@@ -187,7 +170,8 @@ private fun parseEvents(doc: Document): List<Event> {
         val datePlace   = card.selectFirst(".text-muted.small.mb-2")?.text()?.trim() ?: ""
         val description = card.selectFirst("p.card-text.text-muted.mb-3")?.text()?.trim() ?: ""
         val url         = card.selectFirst("a[href^='/events/']")?.attr("abs:href") ?: ""
-        if (title.isNotEmpty()) list.add(Event(title, datePlace, description, url))
+        val imageUrl    = card.selectFirst("div.col-md-4 img")?.attr("abs:src")
+        if (title.isNotEmpty()) list.add(Event(title, datePlace, description, url, imageUrl))
     }
 
     doc.select("div.border-bottom.py-3").forEach { block ->

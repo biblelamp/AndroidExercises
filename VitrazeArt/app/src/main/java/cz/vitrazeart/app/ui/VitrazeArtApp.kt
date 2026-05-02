@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
-import cz.vitrazeart.app.Event
+import cz.vitrazeart.app.model.Event
 import cz.vitrazeart.app.MAIN_URL
 import cz.vitrazeart.app.loadCachedEventsList
 import cz.vitrazeart.app.loadEvents
@@ -132,8 +132,12 @@ fun VitrazeArtApp() {
                             modifier            = Modifier.fillMaxSize().padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            items(events) { ann ->
-                                EventCard(ann, onClick = { selectedEvent = ann })
+                            itemsIndexed(events) { index, ann ->
+                                EventCard(
+                                    ann,
+                                    onClick = { selectedEvent = ann },
+                                    showImage = index == 0
+                                )
                             }
                             item {
                                 val uriHandler = LocalUriHandler.current

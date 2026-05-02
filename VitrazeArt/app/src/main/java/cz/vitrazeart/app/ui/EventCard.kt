@@ -13,19 +13,34 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import cz.vitrazeart.app.Event
+import coil.compose.AsyncImage
+import cz.vitrazeart.app.model.Event
 
 // ─── Карточка анонса ──────────────────────────────────────────────────────────
 
 @Composable
-fun EventCard(ann: Event, onClick: () -> Unit) {
+fun EventCard(ann: Event, onClick: () -> Unit, showImage: Boolean = false) {
     Card(
         modifier  = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
+            if (showImage && ann.imageUrl != null) {
+                AsyncImage(
+                    model              = ann.imageUrl,
+                    contentDescription = ann.title,
+                    modifier           = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                        .clip(MaterialTheme.shapes.medium),
+                    contentScale       = ContentScale.Crop
+                )
+                Spacer(Modifier.height(12.dp))
+            }
             Text(ann.date,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary)
