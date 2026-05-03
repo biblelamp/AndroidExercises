@@ -60,7 +60,9 @@ fun loadCachedEventsList(context: Context): List<Event>? {
                     o.getString("title"),
                     o.getString("date"),
                     o.getString("description"),
-                    o.getString("url"))
+                    o.getString("url"),
+                    if (o.has("imageUrl")) o.getString("imageUrl") else null
+                )
             }
         }
     } catch (_: Exception) { null }
@@ -93,7 +95,9 @@ fun saveEventDetail(context: Context, url: String, detail: EventDetail) {
     val obj = JSONObject().apply {
         put("title",     detail.title)
         put("datePlace", detail.datePlace)
-        detail.imageUrl?.let { put("imageUrl", it) }
+        detail.imageUrl?.let {
+            put("imageUrl", it)
+        }
         put("blocks", blocksArr)
     }
     val key = KEY_DETAIL_PFX + url.hashCode()
