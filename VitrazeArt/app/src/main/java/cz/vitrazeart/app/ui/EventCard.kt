@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import cz.vitrazeart.app.R
 import cz.vitrazeart.app.model.Event
 
 // ─── Карточка анонса ──────────────────────────────────────────────────────────
@@ -37,7 +39,9 @@ fun EventCard(ann: Event, onClick: () -> Unit, showImage: Boolean = false) {
                         .fillMaxWidth()
                         .height(180.dp)
                         .clip(MaterialTheme.shapes.medium),
-                    contentScale       = ContentScale.Crop
+                    contentScale       = ContentScale.Crop,
+                    placeholder        = painterResource(R.mipmap.ic_launcher_round),
+                    error              = painterResource(R.mipmap.ic_launcher_round)
                 )
                 Spacer(Modifier.height(12.dp))
             }
