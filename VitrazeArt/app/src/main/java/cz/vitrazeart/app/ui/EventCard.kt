@@ -1,5 +1,6 @@
 package cz.vitrazeart.app.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,50 +16,64 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import cz.vitrazeart.app.R
 import cz.vitrazeart.app.model.Event
 
 // ─── Карточка анонса ──────────────────────────────────────────────────────────
 
 @Composable
-fun EventCard(ann: Event, onClick: () -> Unit, showImage: Boolean = false) {
+fun EventCard(event: Event, onClick: () -> Unit, showImage: Boolean = false, showButton: Boolean = false) {
     Card(
-        modifier  = Modifier.fillMaxWidth(),
+        modifier  = Modifier.fillMaxWidth().clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            if (showImage && ann.imageUrl != null) {
+            if (showImage && event.imageUrl != null) {
                 AsyncImage(
-                    model              = ann.imageUrl,
-                    contentDescription = ann.title,
+                    model              = event.imageUrl,
+                    contentDescription = event.title,
                     modifier           = Modifier
                         .fillMaxWidth()
                         .height(180.dp)
                         .clip(MaterialTheme.shapes.medium),
                     contentScale       = ContentScale.Crop,
-                    placeholder        = painterResource(R.mipmap.ic_launcher_round),
-                    error              = painterResource(R.mipmap.ic_launcher_round)
+                    //placeholder        = painterResource(R.mipmap.ic_launcher_round),
+                    //error              = painterResource(R.mipmap.ic_launcher_round)
                 )
                 Spacer(Modifier.height(12.dp))
             }
-            Text(ann.date,
+            Text(event.date,
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary)
             Spacer(Modifier.height(8.dp))
-            Text(ann.title,
+            Text(event.title,
                 style    = MaterialTheme.typography.titleLarge,
                 maxLines = 2, overflow = TextOverflow.Ellipsis)
             Spacer(Modifier.height(8.dp))
-            Text(ann.description,
+            val description = buildAnnotatedString {
+                append(event.description)
+                if (!showButton) {
+                    append(" ")
+                    withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                        append("Подробнее →")
+                    }
+                }
+            }
+            Text(description,
                 style    = MaterialTheme.typography.bodyMedium,
-                maxLines = 3, overflow = TextOverflow.Ellipsis)
-            Spacer(Modifier.height(12.dp))
-            Button(onClick = onClick, modifier = Modifier.align(Alignment.End)) {
-                Text("Подробнее")
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
+            )
+            if (showButton) {
+                //Spacer(Modifier.height(8.dp))
+                Button(onClick = onClick, modifier = Modifier.align(Alignment.End)) {
+                    Text("Подробнее")
+                }
             }
         }
     }

@@ -48,7 +48,7 @@ fun EventDetailContent(detail: EventDetail, modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.primary)
         }
-        Text(detail.title, style = MaterialTheme.typography.headlineSmall)
+        //Text(detail.title, style = MaterialTheme.typography.headlineSmall)
         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
 
         if (detail.imageUrl != null) {
@@ -60,8 +60,8 @@ fun EventDetailContent(detail: EventDetail, modifier: Modifier = Modifier) {
                     .height(180.dp)
                     .clip(MaterialTheme.shapes.medium),
                 contentScale       = ContentScale.Crop,
-                placeholder        = painterResource(R.mipmap.ic_launcher_round),
-                error              = painterResource(R.mipmap.ic_launcher_round)
+                //placeholder        = painterResource(R.mipmap.ic_launcher_round),
+                //error              = painterResource(R.mipmap.ic_launcher_round)
             )
         }
 

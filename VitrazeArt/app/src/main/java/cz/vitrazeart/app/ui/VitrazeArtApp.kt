@@ -132,11 +132,12 @@ fun VitrazeArtApp() {
                             modifier            = Modifier.fillMaxSize().padding(16.dp),
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
-                            itemsIndexed(events) { index, ann ->
+                            itemsIndexed(events) { index, event ->
                                 EventCard(
-                                    ann,
-                                    onClick = { selectedEvent = ann },
-                                    showImage = index == 0
+                                    event,
+                                    onClick = { selectedEvent = event },
+                                    showImage = index == 0,
+                                    showButton = index == 0   // button only on first card
                                 )
                             }
                             item {
