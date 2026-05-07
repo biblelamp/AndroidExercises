@@ -33,8 +33,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import cz.vitrazeart.app.model.Event
 import cz.vitrazeart.app.MAIN_URL
+import cz.vitrazeart.app.data.loadEvents
 import cz.vitrazeart.app.loadCachedEventsList
-import cz.vitrazeart.app.loadEvents
 import cz.vitrazeart.app.saveEventsList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

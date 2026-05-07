@@ -26,10 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cz.vitrazeart.app.data.loadEventDetail
 import cz.vitrazeart.app.model.Event
 import cz.vitrazeart.app.model.EventDetail
 import cz.vitrazeart.app.loadCachedEventDetail
-import cz.vitrazeart.app.loadEventDetail
 import cz.vitrazeart.app.saveEventDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
