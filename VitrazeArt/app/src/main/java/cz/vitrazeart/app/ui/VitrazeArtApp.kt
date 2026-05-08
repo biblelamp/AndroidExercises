@@ -33,9 +33,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import cz.vitrazeart.app.model.Event
 import cz.vitrazeart.app.MAIN_URL
+import cz.vitrazeart.app.data.CacheManager
 import cz.vitrazeart.app.data.loadEvents
-import cz.vitrazeart.app.loadCachedEventsList
-import cz.vitrazeart.app.saveEventsList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -45,6 +44,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun VitrazeArtApp() {
     val context = LocalContext.current
+    val cache = remember { CacheManager(context) }
 
     var events        by remember { mutableStateOf<List<Event>>(emptyList()) }
     var isLoading     by remember { mutableStateOf(true) }
@@ -55,7 +55,7 @@ fun VitrazeArtApp() {
 
     LaunchedEffect(Unit) {
         // 1. Немедленно показываем кэш, пока сеть ещё не ответила
-        val cached = withContext(Dispatchers.IO) { loadCachedEventsList(context) }
+        val cached = withContext(Dispatchers.IO) { cache.loadEventsList() }
         if (cached != null) {
             events    = cached
             fromCache = true
@@ -67,7 +67,7 @@ fun VitrazeArtApp() {
             result.onSuccess { list ->
                 events    = list
                 fromCache = false
-                saveEventsList(context, list)   // обновляем кэш
+                cache.saveEventsList(list)   // обновляем кэш
             }.onFailure { err ->
                 // Кэш уже показан — просто молчим.
                 // Только если вообще нечего показать — выводим ошибку.

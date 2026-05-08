@@ -26,11 +26,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import cz.vitrazeart.app.data.CacheManager
 import cz.vitrazeart.app.data.loadEventDetail
 import cz.vitrazeart.app.model.Event
 import cz.vitrazeart.app.model.EventDetail
-import cz.vitrazeart.app.loadCachedEventDetail
-import cz.vitrazeart.app.saveEventDetail
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -40,6 +39,7 @@ import kotlinx.coroutines.withContext
 @Composable
 fun EventDetailScreen(event: Event, onBack: () -> Unit) {
     val context = LocalContext.current
+    val cache = remember { CacheManager(context) }
 
     var detail    by remember { mutableStateOf<EventDetail?>(null) }
     var isLoading by remember { mutableStateOf(true) }
@@ -49,7 +49,7 @@ fun EventDetailScreen(event: Event, onBack: () -> Unit) {
     LaunchedEffect(event.url) {
         // 1. Мгновенно показываем кэш (если анонс уже открывался ранее,
         //    в том числе в прошлых сессиях приложения)
-        val cached = withContext(Dispatchers.IO) { loadCachedEventDetail(context, event.url) }
+        val cached = withContext(Dispatchers.IO) { cache.loadEventDetail(event.url) }
         if (cached != null) {
             detail    = cached
             fromCache = true
@@ -62,7 +62,7 @@ fun EventDetailScreen(event: Event, onBack: () -> Unit) {
             detail    = loaded
             fromCache = false
             // Сохраняем/обновляем кэш после каждого успешного запроса
-            withContext(Dispatchers.IO) { saveEventDetail(context, event.url, loaded) }
+            withContext(Dispatchers.IO) { cache.saveEventDetail(event.url, loaded) }
         } catch (e: Exception) {
             if (detail == null) error = e.message   // показываем ошибку только если кэша нет
         }
