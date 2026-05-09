@@ -63,18 +63,16 @@ fun VitrazeArtApp() {
         }
 
         // 2. Загружаем свежие данные из сети
-        loadEvents { result ->
-            result.onSuccess { list ->
+        loadEvents()
+            .onSuccess { list ->
                 events    = list
                 fromCache = false
-                cache.saveEventsList(list)   // обновляем кэш
-            }.onFailure { err ->
-                // Кэш уже показан — просто молчим.
-                // Только если вообще нечего показать — выводим ошибку.
+                cache.saveEventsList(list)
+            }
+            .onFailure { err ->
                 if (events.isEmpty()) error = err.message
             }
-            isLoading = false
-        }
+        isLoading = false
     }
 
     if (selectedEvent != null) {

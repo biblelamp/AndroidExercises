@@ -7,6 +7,7 @@ import cz.vitrazeart.app.ui.VitrazeArtApp
 
 const val MAIN_URL = "https://vitrazeart.cz/"
 const val USER_AGENT = "Mozilla/5.0 (Android) VitrazeArtApp/1.0"
+const val TIMEOUT = 15000
 
 // ─── Activity ─────────────────────────────────────────────────────────────────
 

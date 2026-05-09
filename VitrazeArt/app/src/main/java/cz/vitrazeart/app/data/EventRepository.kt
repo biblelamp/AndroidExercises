@@ -1,6 +1,7 @@
 package cz.vitrazeart.app.data
 
 import cz.vitrazeart.app.MAIN_URL
+import cz.vitrazeart.app.TIMEOUT
 import cz.vitrazeart.app.USER_AGENT
 import cz.vitrazeart.app.model.ContentBlock
 import cz.vitrazeart.app.model.Event
@@ -12,25 +13,20 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 
-suspend fun loadEvents(onResult: (Result<List<Event>>) -> Unit) {
-    try {
-        val list = withContext(Dispatchers.IO) {
-            val doc = Jsoup.connect(MAIN_URL)
-                .userAgent(USER_AGENT)
-                .timeout(15000)
-                .get()
-            parseEvents(doc)
-        }
-        onResult(Result.success(list))
-    } catch (e: Exception) {
-        onResult(Result.failure(e))
+suspend fun loadEvents(): Result<List<Event>> = runCatching {
+    withContext(Dispatchers.IO) {
+        val doc = Jsoup.connect(MAIN_URL)
+            .userAgent(USER_AGENT)
+            .timeout(TIMEOUT)
+            .get()
+        parseEvents(doc)
     }
 }
 
 fun loadEventDetail(url: String): EventDetail {
     val doc = Jsoup.connect(url)
         .userAgent(USER_AGENT)
-        .timeout(15000)
+        .timeout(TIMEOUT)
         .get()
 
     val title     = doc.selectFirst("h5.card-title")?.text()?.trim()
