@@ -11,7 +11,7 @@ fun parseEvents(doc: Document): List<Event> {
     val list = mutableListOf<Event>()
 
     doc.select("div.card.mb-4.border-0.shadow-sm.overflow-hidden").forEach { card ->
-        val title       = card.selectFirst("h5.card-title")?.text()?.trim() ?: ""
+        val title       = card.selectFirst("h5.card-title")?.ownText()?.trim() ?: ""
         val datePlace   = card.selectFirst(".text-muted.small.mb-2")?.text()?.trim() ?: ""
         val description = card.selectFirst("p.card-text.text-muted.mb-3")?.text()?.trim() ?: ""
         val url         = card.selectFirst("a[href^='/events/']")?.attr("abs:href") ?: ""
@@ -20,7 +20,7 @@ fun parseEvents(doc: Document): List<Event> {
     }
 
     doc.select("div.border-bottom.py-3").forEach { block ->
-        val title       = block.selectFirst("h5.mb-1, h5")?.text()?.trim() ?: ""
+        val title       = block.selectFirst("h5.mb-1, h5")?.ownText()?.trim() ?: ""
         val datePlace   = block.selectFirst(".text-muted.small.mb-1")?.text()?.trim() ?: ""
         val description = block.selectFirst("p.text-muted.mb-2")?.ownText()?.trim() ?: ""
         val url         = block.selectFirst("a[href^='/events/']")?.attr("abs:href") ?: ""
